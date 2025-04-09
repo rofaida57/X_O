@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>x_o</title>
+    <link rel="icon" href="android-chrome-192x192.png" type="image/x-icon" />
+
+    
+    <STyle>
+        body{
+            
+            background-image: url(téléchargé\ \(40\)_LE_upscale_balanced_x4.jpg) ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+        }
+        .game{
+            width: 500px;
+            text-align: center;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: white;
+            text-shadow: 3px white;
+            margin: 40px 50px 150px 150px;
+            font-weight: 500;
+        }
+        .title{
+            padding: 5px 0;
+            margin: 5px 0;
+            background-color:rgb(225, 107, 255);
+            font-size: 26px;
+        }
+        span{
+            color: rgb(0, 238, 255);
+        }
+        .square{
+            width: 155px;
+            height: 155px;
+            background-color: rgb(225, 107, 255);
+            float: left;
+            margin: 5px;
+            font-size: 90px;
+        }
+        .square:hover {
+    box-shadow: inset 0 0 20px 5px white;
+}
+
+
+
+    </STyle>
+</head>
+<body>
+    <div class="game">
+        <div class="title  "><span>X O&nbsp;&nbsp;</span>GAME</div>
+        <div class="square" id="item1" onclick="game(this.id)"></div>
+        <div class="square" id="item2" onclick="game(this.id)"></div>
+        <div class="square" id="item3" onclick="game(this.id)"></div>
+
+        <div class="square" id="item4" onclick="game(this.id)"></div>
+        <div class="square" id="item5" onclick="game(this.id)"></div>
+        <div class="square" id="item6" onclick="game(this.id)"></div>
+
+        <div class="square" id="item7" onclick="game(this.id)"></div>
+        <div class="square" id="item8" onclick="game(this.id)"></div>
+        <div class="square" id="item9" onclick="game(this.id)"></div>
+    </div>
+    <script src="x_o.js"></script>
+</body>
+</html>
