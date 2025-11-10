@@ -50,7 +50,7 @@ function game(id){
        title.innerHTML = 'o';
     }
     else if(turn ==='o' && element.innerHTML == '' ){
-        element.innerHTML ='0'
+        element.innerHTML ='o'
         turn = 'x';
         title.innerHTML = 'x';//يقول دور x
     }

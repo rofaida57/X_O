@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة X O الذكية</title>
+    <link rel="icon" href="android-chrome-192x192.png" type="image/x-icon">
+    <style>
+        /* التنسيقات المصححة */
+        body {
+            background-image: url(téléchargé\ \(40\)_LE_upscale_balanced_x4.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            font-family: system-ui;
+        }
+
+      .game-container {
+    width: 90%;
+    max-width: 500px;
+    margin-right: auto; /* يدفع العنصر لليسار */
+    margin-left: 90px; /* التأكد من عدم وجود هامش على اليسار */
+}
+
+        .game-title {
+            background-color: rgba(225, 107, 255, 0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .cell {
+            background-color: rgba(225, 107, 255, 0.9);
+            aspect-ratio: 1;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cell:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+        }
+
+        @media (max-width: 600px) {
+            .cell { font-size: 3em; }
+            .game-title { font-size: 1.2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-title"><span>X O</span> - ضد الكمبيوتر</div>
+        <div class="game-board">
+            <div class="cell" id="cell1"></div>
+            <div class="cell" id="cell2"></div>
+            <div class="cell" id="cell3"></div>
+            <div class="cell" id="cell4"></div>
+            <div class="cell" id="cell5"></div>
+            <div class="cell" id="cell6"></div>
+            <div class="cell" id="cell7"></div>
+            <div class="cell" id="cell8"></div>
+            <div class="cell" id="cell9"></div>
+        </div>
+    </div>
+
+    <script>
+        // الكود المصحح
+        let isPlayerTurn = true;
+        const human = 'X';
+        const ai = 'O';
+        const winCombos = [
+            [1,2,3], [4,5,6], [7,8,9], // صفوف
+            [1,4,7], [2,5,8], [3,6,9], // أعمدة
+            [1,5,9], [3,5,7] // أقلمة
+        ];
+
+        // تفعيل النقر على الخلايا
+        document.querySelectorAll('.cell').forEach(cell => {
+            cell.addEventListener('click', () => handleClick(cell));
+        });
+
+        function handleClick(cell) {
+            if (!isPlayerTurn || cell.textContent !== '') return;
+            
+            makeMove(cell, human);
+            if (!checkGameOver()) {
+                isPlayerTurn = false;
+                setTimeout(aiMove, 500);
+            }
+        }
+
+        function aiMove() {
+            const bestSpot = findBestMove();
+            makeMove(document.getElementById(`cell${bestSpot}`), ai);
+            isPlayerTurn = true;
+        }
+
+        function makeMove(cell, player) {
+            cell.textContent = player;
+            cell.style.pointerEvents = 'none';
+            checkGameOver();
+        }
+
+        function findBestMove() {
+            // تطبيق خوارزمية minimax مبسطة
+            let bestScore = -Infinity;
+            let bestMove;
+            
+            for (let i = 1; i <= 9; i++) {
+                const cell = document.getElementById(`cell${i}`);
+                if (cell.textContent === '') {
+                    cell.textContent = ai;
+                    let score = minimax(false);
+                    cell.textContent = '';
+                    
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMove = i;
+                    }
+                }
+            }
+            return bestMove;
+        }
+
+        function minimax(isMaximizing) {
+            const result = checkWinner();
+            if (result !== null) {
+                return result === ai ? 1 : result === human ? -1 : 0;
+            }
+
+            if (isMaximizing) {
+                let bestScore = -Infinity;
+                for (let i = 1; i <= 9; i++) {
+                    const cell = document.getElementById(`cell${i}`);
+                    if (cell.textContent === '') {
+                        cell.textContent = ai;
+                        let score = minimax(false);
+                        cell.textContent = '';
+                        bestScore = Math.max(score, bestScore);
+                    }
+                }
+                return bestScore;
+            } else {
+                let bestScore = Infinity;
+                for (let i = 1; i <= 9; i++) {
+                    const cell = document.getElementById(`cell${i}`);
+                    if (cell.textContent === '') {
+                        cell.textContent = human;
+                        let score = minimax(true);
+                        cell.textContent = '';
+                        bestScore = Math.min(score, bestScore);
+                    }
+                }
+                return bestScore;
+            }
+        }
+
+        function checkGameOver() {
+            const winner = checkWinner();
+            if (winner !== null) {
+                endGame(winner);
+                return true;
+            }
+            return false;
+        }
+
+        function checkWinner() {
+            for (let combo of winCombos) {
+                const [a, b, c] = combo;
+                const cells = [
+                    document.getElementById(`cell${a}`),
+                    document.getElementById(`cell${b}`),
+                    document.getElementById(`cell${c}`)
+                ];
+                
+                if (cells[0].textContent &&
+                    cells[0].textContent === cells[1].textContent &&
+                    cells[0].textContent === cells[2].textContent) {
+                    return cells[0].textContent;
+                }
+            }
+            
+            return [...document.querySelectorAll('.cell')]
+                .every(cell => cell.textContent) ? 'draw' : null;
+        }
+
+        function endGame(winner) {
+            const message = winner === human ? 'فزت! 🎉' :
+                           winner === ai ? 'الكمبيوتر فاز! 🤖' : 
+                           'تعادل! 🤝';
+            
+            document.querySelector('.game-title').innerHTML = message;
+            setTimeout(() => location.reload(), 3000);
+        }
+    </script>
+</body>
+</html>

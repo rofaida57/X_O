@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>x_o</title>
+    <link rel="icon" href="android-chrome-192x192.png" type="image/x-icon" />
+
+    
+    <STyle>
+body {
+    background-image: url(téléchargé\ \(40\)_LE_upscale_balanced_x4.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    margin: 0;
+    font-family: system-ui;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* تعريف واحد فقط لكلاس game */
+.game {
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    color: white;
+    margin-right: auto; /* يدفع العنصر لليسار */
+    margin-left: 90px; /* التأكد من عدم وجود هامش على اليسار */
+    padding: 15px;
+    display: grid; /* إضافة خاصية الـ grid هنا */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.title {
+    padding: 15px 0;
+    margin: 0 0 2px 0;
+    background-color: rgba(225, 107, 255, 0.9);
+    font-size: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    letter-spacing: 2px;
+    grid-column: 1 / -1; /* لجعل العنوان يغطي كل الأعمدة */
+}
+
+.title span {
+    color: #00eeff;
+    text-shadow: 0 0 10px rgba(0, 238, 255, 0.5);
+}
+
+.square {
+    background-color: rgba(225, 107, 255, 0.9);
+    border-radius: 10px;
+    font-size: 4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.square:hover {
+    box-shadow: inset 0 0 20px 5px rgba(255, 255, 255, 0.7);
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+    .game {
+        max-width: 300px;
+        gap: 8px;
+    }
+    
+    .title {
+        font-size: 1.5rem;
+        padding: 10px 0;
+    }
+    
+    .square {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .square {
+        font-size: 2.5rem;
+    }
+    
+    .title {
+        font-size: 1.3rem;
+        padding: 8px 0;
+    }
+}
+
+    </STyle>
+</head>
+<body>
+    <div class="game">
+        <div class="title  "><span>X O&nbsp;&nbsp;</span>GAME</div>
+        <div class="square" id="item1" onclick="game(this.id)"></div>
+        <div class="square" id="item2" onclick="game(this.id)"></div>
+        <div class="square" id="item3" onclick="game(this.id)"></div>
+
+        <div class="square" id="item4" onclick="game(this.id)"></div>
+        <div class="square" id="item5" onclick="game(this.id)"></div>
+        <div class="square" id="item6" onclick="game(this.id)"></div>
+
+        <div class="square" id="item7" onclick="game(this.id)"></div>
+        <div class="square" id="item8" onclick="game(this.id)"></div>
+        <div class="square" id="item9" onclick="game(this.id)"></div>
+    </div>
+    <script src="x_o.js"></script>
+</body>
+</html>
